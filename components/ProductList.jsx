@@ -11,6 +11,7 @@ import FiberNewOutlinedIcon from '@mui/icons-material/FiberNewOutlined';
 import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import Badge from '@mui/material/Badge';
+import Link from 'next/link';
 
 const ProductList = ({ content }) => {
   return (
@@ -69,7 +70,9 @@ const ProductList = ({ content }) => {
                 </AccordionDetails>
                 <AccordionActions>
                     <Button variant='outlined'>Edit</Button>
-                    <Button variant='outlined' sx={{ borderColor: "red", color: "red"}}>Delete</Button>
+                    <Link href={`/sklad/${item.id}`}>
+                        <Button variant='outlined' sx={{ borderColor: "red", color: "red"}}>More</Button>
+                    </Link>
                 </AccordionActions>
             </Accordion>
         ))}

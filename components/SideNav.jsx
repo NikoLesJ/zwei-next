@@ -6,10 +6,10 @@ import {
   RoofingOutlined,
   QuestionAnswerOutlined,
   AutoGraphOutlined,
-  Diversity3Outlined,
   SettingsSuggestOutlined,
   LogoutOutlined,
-  WarehouseOutlined
+  WarehouseOutlined,
+  DisplaySettingsOutlined
 } from "@mui/icons-material";
 import Link from "next/link";
 import Header from "./Header";
@@ -23,7 +23,7 @@ const SideNav = ( { content }) => {
     { icon: <WarehouseOutlined />, name: "Sklad", link: "/sklad" },
     { icon: <QuestionAnswerOutlined />, name: "Blog", link: "/blog" },
     { icon: <AutoGraphOutlined />, name: "About", link: "/about" },
-    { icon: <Diversity3Outlined />, name: "Team", link: "#" },
+    { icon: <DisplaySettingsOutlined />, name: "Attributes", link: "/attributes" },
     { icon: <SettingsSuggestOutlined />, name: "Settings", link: "#" }
   ]
 
