@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import AttributesShow from "@/components/AttributesShow";
-import PageHead from "@/components/PageHead";
 
 const AttributList = () => {
   const [category, setCategory] = useState("rozetka"); // Первое значение
@@ -47,7 +46,6 @@ const AttributList = () => {
 
   return (
     <div>
-      <PageHead head={category} />
       <div className="flex flex-row p-4 gap-3">
         {/* Выбор категорий */}
         <select
@@ -80,10 +78,12 @@ const AttributList = () => {
       </div>
 
       {/* Результаты */}
-      <div className="p-4">
+      <div className="px-4">
         {loading && <p>Загрузка...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        {data && <AttributesShow data={data} />}
+        {data && <AttributesShow 
+                  data={data}
+                />}
       </div>
     </div>
   );
