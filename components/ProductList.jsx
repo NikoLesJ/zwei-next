@@ -17,7 +17,7 @@ const ProductList = ({ content }) => {
   return (
     <div className='m-2'>
         {content.data.map((item) => (
-            <Accordion key={item.id} sx={ item.check > 0 ? { borderLeft: "8px solid white"} : { borderLeft: "8px solid red", backgroundColor: "#f7f7f7"} }>
+            <Accordion key={item.id} sx={ item.check > 0 ? { borderLeft: "8px solid white"} : { borderLeft: "8px solid #646464", backgroundColor: "#f7f7f7"} }>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3-content"
@@ -41,7 +41,7 @@ const ProductList = ({ content }) => {
                                 }
                                 </span>
                             </div>
-                            <Badge badgeContent={item.count} color="success">
+                            <Badge badgeContent={item.count} color={item.count > 0 ? "success" : "error"}>
                                 <div className='ml-5 border-2 border-blue-500 p-1 rounded bg-blue-400 text-white font-bold'>
                                     {item.price}
                                 </div>

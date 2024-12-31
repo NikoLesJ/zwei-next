@@ -34,7 +34,7 @@ export default function NavSide() {
       { icon: <QuestionAnswerOutlined />, name: "Blog", link: "/blog" },
       { icon: <AutoGraphOutlined />, name: "About", link: "/about" },
       { icon: <DisplaySettingsOutlined />, name: "Attributes", link: "/attributes" },
-      { icon: <SettingsSuggestOutlined />, name: "Settings", link: "#" }
+      { icon: <SettingsSuggestOutlined />, name: "Settings", link: "/settings" }
     ]
 
   const toggleDrawer = (newOpen) => () => {
@@ -67,7 +67,7 @@ export default function NavSide() {
         ))}
       </List>
       <Divider />
-      <List>
+      <List sx={{ position: "absolute", bottom: "50px"}}>
         {['All mail', 'Trash', 'Spam'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>

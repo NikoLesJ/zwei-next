@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,7 +9,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ModalFirst({ icon }) {
+import useModalFormStore from '@/store/modalFormStore';
+import useStore from '@/store/store';
+
+export default function ModalFirst({ icon, data, template }) {
+  const { sendFormData } = useModalFormStore();
+  const { category, subCategory} = useStore();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -28,33 +36,39 @@ export default function ModalFirst({ icon }) {
         onClose={handleClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event) => {
+          onSubmit: async (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
+            
+            try {
+              await sendFormData(formJson, category, subCategory);
+              handleClose();
+            } catch (error) {
+              console.error('Failed to submit form:', error);
+            }
           },
         }}
       >
-        <DialogTitle>Create: Attribute</DialogTitle>
+        <DialogTitle>Create: <span className='font-bold text-green-600 uppercase'>{data}</span> Attribute</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+           {icon.props.color === "success" ? "Добавить новый атрибут:" : " Добавить новую опцию:"}
           </DialogContentText>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+            {template.map((item, index) => (
+              <TextField
+                key={index}
+                required
+                margin="dense"
+                id={item}
+                name={item}
+                label={item}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            ))}
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

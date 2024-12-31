@@ -6,8 +6,15 @@ import SegmentOutlinedIcon from '@mui/icons-material/SegmentOutlined';
 import ModalFirst from './ModalFirst';
 import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
 import TextRotateVerticalIcon from '@mui/icons-material/TextRotateVertical';
+import useStore from '@/store/store';
 
 const AttributesShow = ({ data }) => {
+    const category = useStore((state) => state.category);
+    const subCategory = useStore((state) => state.subCategory)
+
+    const attributNames = useStore((state) => state.attributNames);
+    const optionNames = useStore((state) => state.optionNames)
+
     const [selectedAttributes, setSelectedAttributes] = useState([]);
 
 
@@ -25,9 +32,11 @@ const AttributesShow = ({ data }) => {
         <div className='w-1/2 p-2 relative'>
             <div className='flex flex-row justify-between px-5 bg-gray-50 rounded items-center p-1 border-b-4 border-gray-400 sticky top-14 z-10'>
                 <h4 className='font-bold'>Добавить атрибут:</h4>
-                <ModalFirst 
-                    icon={<TextIncreaseIcon color='success'
-                />} />
+                <ModalFirst
+                    template={attributNames}
+                    data={category}
+                    icon={<TextIncreaseIcon color='success' />} 
+                />
             </div>
             <div className='mt-4'>
                 {data.map((item) => (
@@ -49,7 +58,9 @@ const AttributesShow = ({ data }) => {
             <div className='sticky top-14'>
                 <div className='flex flex-row justify-between px-5 bg-gray-50 rounded items-center p-1 border-b-4 border-gray-400'>
                     <h4 className='font-bold'>Добавить опцию:</h4>
-                    <ModalFirst 
+                    <ModalFirst
+                        template={optionNames}
+                        data={subCategory}
                         icon={<TextRotateVerticalIcon color='secondary'
                     />} />
                 </div>
