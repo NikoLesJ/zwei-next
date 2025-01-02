@@ -13,15 +13,20 @@ const AttributesShow = ({ data }) => {
     const subCategory = useStore((state) => state.subCategory)
 
     const attributNames = useStore((state) => state.attributNames);
-    const optionNames = useStore((state) => state.optionNames)
+    const optionNames = useStore((state) => state.optionNames);
+    const setAttributeKode = useStore((state) => state.setAttributeKode);
 
     const [selectedAttributes, setSelectedAttributes] = useState([]);
+    const [attrName, setAttrName] = useState();
 
 
-    const handleButtonClick = (attributes) => {
+
+    const handleButtonClick = (attributes, attributeKode, attibutName) => {
         if (attributes) {
             const optionNames = attributes.map(attr => attr.optionName);
             setSelectedAttributes(optionNames);
+            setAttrName(attibutName);
+            setAttributeKode(attributeKode);
         } else {
             setSelectedAttributes([]);
         }
@@ -44,7 +49,7 @@ const AttributesShow = ({ data }) => {
                         <li className='flex flex-row items-center justify-between p-3 border-b border-gray-500'>
                             {item.Name}
                             {item.attributes 
-                                ? <Button size="small" variant='outlined' onClick={() => handleButtonClick(item.attributes)}>
+                                ? <Button size="small" variant='outlined' onClick={() => handleButtonClick(item.attributes, item.atributKode, item.Name)}>
                                     <SegmentOutlinedIcon />
                                 </Button> 
                                 : ""
@@ -57,7 +62,7 @@ const AttributesShow = ({ data }) => {
         <div className='w-1/2 p-2 relative'>
             <div className='sticky top-14'>
                 <div className='flex flex-row justify-between px-5 bg-gray-50 rounded items-center p-1 border-b-4 border-gray-400'>
-                    <h4 className='font-bold'>Добавить опцию:</h4>
+                    <h4 className='font-bold'>Добавить опцию для <span className='text-green-700 uppercase'>{attrName}</span>:</h4>
                     <ModalFirst
                         template={optionNames}
                         data={subCategory}

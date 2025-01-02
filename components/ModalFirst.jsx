@@ -11,10 +11,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import useModalFormStore from '@/store/modalFormStore';
 import useStore from '@/store/store';
+import { Alert, Snackbar } from '@mui/material';
 
 export default function ModalFirst({ icon, data, template }) {
-  const { sendFormData } = useModalFormStore();
-  const { category, subCategory} = useStore();
+  const { sendAttributeFormData,
+          sendOptionFormData,
+          successMessage, 
+          setSuccessMessage,
+          clearMessage
+        } = useModalFormStore();
+  const { category, subCategory, attributeKode} = useStore();
 
   const [open, setOpen] = React.useState(false);
 
@@ -42,10 +48,23 @@ export default function ModalFirst({ icon, data, template }) {
             const formJson = Object.fromEntries(formData.entries());
             
             try {
-              await sendFormData(formJson, category, subCategory);
-              handleClose();
+              if(attributeKode === null) {
+                await sendAttributeFormData(formJson, {
+                  category,
+                  subCategory
+                });
+                handleClose();
+              } else {
+                await sendOptionFormData(formJson, {
+                  category,
+                  subCategory,
+                  attributeKode
+                });
+                handleClose();
+              }
             } catch (error) {
               console.error('Failed to submit form:', error);
+              setSuccessMessage('Произошла ошибка при отправке!');
             }
           },
         }}
@@ -58,7 +77,6 @@ export default function ModalFirst({ icon, data, template }) {
             {template.map((item, index) => (
               <TextField
                 key={index}
-                required
                 margin="dense"
                 id={item}
                 name={item}
@@ -75,6 +93,15 @@ export default function ModalFirst({ icon, data, template }) {
           <Button type="submit" color='success' variant='outlined'>Send</Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={!!successMessage}
+        autoHideDuration={3000}
+        onClose={() => clearMessage()}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="success">{successMessage}</Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }

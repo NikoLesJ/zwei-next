@@ -9,8 +9,11 @@ const useStore = create((set) => ({
 
   attributNames: [],
   optionNames: [],
+  attributeKode: '',
   setAttributNames: (attributNames) => set({ attributNames }),
   setOptionNames: (optionNames) => set({ optionNames }),
+  setAttributeKode: (attributeKode) => set({ attributeKode }),
+  resetAttributeKode: () => set({ attributeKode: null })
 }));
 
 export default useStore;

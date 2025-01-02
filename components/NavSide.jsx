@@ -20,7 +20,8 @@ import {
     AutoGraphOutlined,
     SettingsSuggestOutlined,
     WarehouseOutlined,
-    DisplaySettingsOutlined
+    DisplaySettingsOutlined,
+    PointOfSaleOutlined
   } from "@mui/icons-material";
 import Link from 'next/link';
 
@@ -31,6 +32,7 @@ export default function NavSide() {
     const menuItems = [
       { icon: <RoofingOutlined />, name: "Home", link: "/" },
       { icon: <WarehouseOutlined />, name: "Sklad", link: "/sklad" },
+      { icon: <PointOfSaleOutlined />, name: "Sales", link: "/sales" },
       { icon: <QuestionAnswerOutlined />, name: "Blog", link: "/blog" },
       { icon: <AutoGraphOutlined />, name: "About", link: "/about" },
       { icon: <DisplaySettingsOutlined />, name: "Attributes", link: "/attributes" },

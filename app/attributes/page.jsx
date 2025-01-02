@@ -23,6 +23,7 @@ const AttributList = () => {
 
   const setAttributNames = useStore((state) => state.setAttributNames);
   const setOptionNames = useStore((state) => state.setOptionNames);
+  const resetAttributeKode = useStore((state) => state.resetAttributeKode);
 
   const [category, setLocalCategory] = useState("rozetka"); // Первое значение
   const [subCategory, setLocalSubCategory] = useState("internet"); // Второе значение
@@ -32,6 +33,7 @@ const AttributList = () => {
 
 
   const fetchData = async () => {
+    resetAttributeKode();
     setLoading(true);
     setError(null); // Сбрасываем ошибки при новом запросе
     setCategory(category); // Сохраняем в глобальный store
