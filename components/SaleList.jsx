@@ -1,6 +1,6 @@
 "use client"
 
-import { FormControl, InputLabel, MenuItem, Select, Accordion, AccordionActions, AccordionDetails, AccordionSummary, Badge, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, Accordion, AccordionActions, AccordionDetails, AccordionSummary, Badge, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Grid2, Paper } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import React, { useState, useEffect } from "react";
@@ -49,6 +49,17 @@ const SaleList = ({ data }) => {
   
     const dataForSelectedYearAndMonth =
       groupedData[selectedYear]?.[selectedMonth] || {};
+
+      const totalForCurrentMonth = Object.values(dataForSelectedYearAndMonth).flat();
+      const totalMargeForCurrentMonth = totalForCurrentMonth.reduce(
+        (sum, item) => sum + parseFloat(item.marge || 0),
+        0
+      );
+      const totalMarketPForCurrentMonth = totalForCurrentMonth.reduce(
+        (sum, item) => sum + parseFloat(item.market_p || 0),
+        0
+      );
+      const totalPositionsForCurrentMonth = totalForCurrentMonth.length;
   
     const sortedDays = Object.keys(dataForSelectedYearAndMonth).sort((a, b) =>
       new Date(`${selectedYear}-${selectedMonth}-${a}`) -
@@ -58,32 +69,47 @@ const SaleList = ({ data }) => {
 
   return (
     <div>
-        <div className="flex flex-row justify-between items-center p-2 mx-2 border-b-2 border-gray-500">
-            <div className="text-xl">
-                Данные за <span className="font-bold underline">{selectedMonth}.{selectedYear}</span>
-            </div>
-            <div>
-                <FormControl sx={{ width: "8rem"}}>
-                <InputLabel id="demo-simple-select-label">Год:</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={selectedYear}
-                    label="Год:"
-                    onChange={handleYearChange}
-                >
-                    {Object.keys(groupedData).map((year) => (
-                        <MenuItem key={year} value={year}>{year}</MenuItem>
-                    ))}
-                </Select>
-                </FormControl>
-            </div>
-      </div>
+        <div className="p-2 mx-2 border-b-2 border-gray-500">
+        <Grid2 container spacing={{ xs: 2, md: 1 }} sx={{ alignItems: "center"}} >
+            <Grid2 size={{ xs: 6, md: 2 }}>
+              <div className="text-xl">
+                  Данные за <span className="font-bold underline">{selectedMonth}.{selectedYear}</span>
+              </div>
+            </Grid2>
+            <Grid2 size={{ xs: 12, md: 8 }} sx={{ order: { xs: 1, md: 0 }, display: "flex", flexDirection: "row", gap: "3rem"}}>
+              <div className="sm:text-xl text-gray-400">marge: <span className='bg-[#4caf50] text-white p-1 rounded'>{totalMargeForCurrentMonth.toFixed(2)}</span></div>
+              <div className="sm:text-xl text-gray-400">total: <span className='bg-[#0288d1] text-white p-1 rounded'>{totalMarketPForCurrentMonth.toFixed(2)}</span></div>
+              <div className="sm:text-xl text-gray-400">count: <span className='bg-[#7b1fa2] text-white py-1 px-2 rounded-full'>{totalPositionsForCurrentMonth}</span></div>
+            </Grid2>
+            <Grid2 size={{ xs: 6, md: 2 }} sx={{ textAlign: "end"}}>
+                  <FormControl sx={{ width: "8rem"}} size="small">
+                  <InputLabel id="demo-simple-select-label">Год:</InputLabel>
+                  <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={selectedYear}
+                      label="Год:"
+                      onChange={handleYearChange}
+                  >
+                      {Object.keys(groupedData).map((year) => (
+                          <MenuItem key={year} value={year}>{year}</MenuItem>
+                      ))}
+                  </Select>
+                  </FormControl>
+            </Grid2>
+          </Grid2>
+        </div>
 
       <div className='m-2'>
         {sortedDays.length > 0 ? (
-          sortedDays.slice().reverse().map((day) => (
-            <div key={day} className='bg-gray-100'>
+          sortedDays.slice().reverse().map((day) => {
+
+            const items = dataForSelectedYearAndMonth[day];
+            const totalMarge = items.reduce((sum, item) => sum + parseFloat(item.marge || 0), 0);
+            const totalMarketP = items.reduce((sum, item) => sum + parseFloat(item.market_p || 0), 0);
+
+            return (
+            <Paper key={day} className='mb-3' elevation={3}>
 
               {dataForSelectedYearAndMonth[day].map((item) => (
                 <Accordion 
@@ -180,16 +206,16 @@ const SaleList = ({ data }) => {
 
               <div className='flex flex-row justify-between items-center'>
                 <div className='flex flex-row flex-1 justify-end sm:gap-4 gap-1 sm:mr-5 mr-2'>
-                  <p>Total: <span className='font-bold'>2222</span></p>
-                  <p>Total: <span className='font-bold'>2222</span></p>
-                  <p>Total: <span className='font-bold'>2222</span></p>
+                  <p className='text-center'>Total: <span className='font-bold'>{totalMarge.toFixed(2)}</span></p>
+                  <p className='text-center'>Total: <span className='font-bold'>{totalMarketP.toFixed(2)}</span></p>
                 </div>
                 <div className='font-bold bg-gray-300 border-r-4 border-gray-500 pl-2 pr-5 py-1'>
                   {`${selectedYear}-${selectedMonth}-${day}`}
                 </div>
               </div>
-            </div>
-          ))
+            </Paper>
+            );
+          })
         ) : (
           <p>Нет данных за этот месяц.</p>
         )}

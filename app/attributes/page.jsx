@@ -106,7 +106,7 @@ const AttributList = () => {
       </div>
 
       {/* Результаты */}
-      <div className="px-4">
+      <div className="sm:px-4">
         {loading && <p>Загрузка...</p>}
         {error && <p className="text-red-500">{error}</p>}
         {data && <AttributesShow 

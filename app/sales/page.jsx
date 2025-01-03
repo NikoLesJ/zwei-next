@@ -1,5 +1,4 @@
 import SaleList from "@/components/SaleList";
-import TestSale from "@/components/TestSale";
 
 async function getData() {
   const response = await fetch("https://tg-chat.zwei.fun/sales", {
@@ -15,7 +14,6 @@ const SalesPage = async () => {
   return (
     <div>
       <SaleList data={saleList} />
-      {/* <TestSale data={saleList} /> */}
     </div>
   )
 }
