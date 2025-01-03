@@ -72,14 +72,14 @@ const SaleList = ({ data }) => {
         <div className="p-2 mx-2 border-b-2 border-gray-500">
         <Grid2 container spacing={{ xs: 2, md: 1 }} sx={{ alignItems: "center"}} >
             <Grid2 size={{ xs: 6, md: 2 }}>
-              <div className="text-xl">
+              <div className="sm:text-xl text-sm uppercase">
                   Данные за <span className="font-bold underline">{selectedMonth}.{selectedYear}</span>
               </div>
             </Grid2>
             <Grid2 size={{ xs: 12, md: 8 }} sx={{ order: { xs: 1, md: 0 }, display: "flex", flexDirection: "row", gap: "3rem"}}>
-              <div className="sm:text-xl text-gray-400">marge: <span className='bg-[#4caf50] text-white p-1 rounded'>{totalMargeForCurrentMonth.toFixed(2)}</span></div>
-              <div className="sm:text-xl text-gray-400">total: <span className='bg-[#0288d1] text-white p-1 rounded'>{totalMarketPForCurrentMonth.toFixed(2)}</span></div>
-              <div className="sm:text-xl text-gray-400">count: <span className='bg-[#7b1fa2] text-white py-1 px-2 rounded-full'>{totalPositionsForCurrentMonth}</span></div>
+              <div className="sm:text-xl text-gray-400 text-center">marge: <span className='bg-[#4caf50] text-white p-1 rounded'>{totalMargeForCurrentMonth.toFixed(2)}</span></div>
+              <div className="sm:text-xl text-gray-400 text-center">total: <span className='bg-[#0288d1] text-white p-1 rounded'>{totalMarketPForCurrentMonth.toFixed(2)}</span></div>
+              <div className="sm:text-xl text-gray-400 text-center">count: <span className='bg-[#7b1fa2] text-white py-1 px-2 rounded-full'>{totalPositionsForCurrentMonth}</span></div>
             </Grid2>
             <Grid2 size={{ xs: 6, md: 2 }} sx={{ textAlign: "end"}}>
                   <FormControl sx={{ width: "8rem"}} size="small">
@@ -206,8 +206,8 @@ const SaleList = ({ data }) => {
 
               <div className='flex flex-row justify-between items-center'>
                 <div className='flex flex-row flex-1 justify-end sm:gap-4 gap-1 sm:mr-5 mr-2'>
-                  <p className='text-center'>Total: <span className='font-bold'>{totalMarge.toFixed(2)}</span></p>
-                  <p className='text-center'>Total: <span className='font-bold'>{totalMarketP.toFixed(2)}</span></p>
+                  <p className='text-center sm:text-xl text-sm text-gray-500'>marge: <span className='font-bold text-green-800'>{totalMarge.toFixed(2)}</span></p>
+                  <p className='text-center sm:text-xl text-sm text-gray-500'>total: <span className='font-bold text-blue-900'>{totalMarketP.toFixed(2)}</span></p>
                 </div>
                 <div className='font-bold bg-gray-300 border-r-4 border-gray-500 pl-2 pr-5 py-1'>
                   {`${selectedYear}-${selectedMonth}-${day}`}
